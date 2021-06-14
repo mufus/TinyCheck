@@ -3,6 +3,7 @@ M2Crypto
 pyOpenSSL
 pydig
 pymisp
+pycti
 netaddr
 pyyaml
 flask
