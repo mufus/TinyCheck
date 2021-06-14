@@ -29,6 +29,17 @@ class MISPInst(db.Model):
         self.last_sync = last_sync
 
 
+class OCTIInst(db.Model):
+    def __init__(self, name, url, key, ssl, added_on, last_sync):
+        self.name = name
+        self.url = url
+        self.apikey = key
+        self.verifycert = ssl
+        self.added_on = added_on
+        self.last_sync = last_sync
+
+
 db.mapper(Whitelist, db.Table('whitelist', db.metadata, autoload=True))
 db.mapper(Ioc, db.Table('iocs', db.metadata, autoload=True))
 db.mapper(MISPInst, db.Table('misp', db.metadata, autoload=True))
+db.mapper(OCTIInst, db.Table('octi', db.metadata, autoload=True))

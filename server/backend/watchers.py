@@ -5,6 +5,7 @@ from app.utils import read_config
 from app.classes.iocs import IOCs
 from app.classes.whitelist import WhiteList
 from app.classes.misp import MISP
+from app.classes.octi import OCTI
 
 import requests
 import json
@@ -41,8 +42,10 @@ def watch_iocs():
                     res = requests.get(w["url"], verify=False)
                     if res.status_code == 200:
                         content = json.loads(res.content)
-                        iocs_list = content["iocs"] if "iocs" in content else []
-                        to_delete = content["to_delete"] if "to_delete" in content else []
+                        iocs_list = content["iocs"] if "iocs" in content else [
+                        ]
+                        to_delete = content["to_delete"] if "to_delete" in content else [
+                        ]
                     else:
                         w["status"] = False
                 except:
@@ -89,8 +92,10 @@ def watch_whitelists():
                     res = requests.get(w["url"], verify=False)
                     if res.status_code == 200:
                         content = json.loads(res.content)
-                        elements = content["elements"] if "elements" in content else []
-                        to_delete = content["to_delete"] if "to_delete" in content else []
+                        elements = content["elements"] if "elements" in content else [
+                        ]
+                        to_delete = content["to_delete"] if "to_delete" in content else [
+                        ]
                     else:
                         w["status"] = False
                 except:
@@ -135,13 +140,40 @@ def watch_misp():
                              ioc["value"], "misp-{}".format(ist["id"]))
                 misp.update_sync(ist["id"])
                 instances.pop(i)
-        if instances: time.sleep(60)
+        if instances:
+            time.sleep(60)
+
+
+def watch_opencti():
+    """
+        Retrieve IOCs from OpenCTI instances. Each new element is
+        tested and then added to the database.
+    """
+    iocs, octi = IOCs(), OCTI()
+    instances = [i for i in octi.get_instances()]
+
+    while instances:
+        for i, ist in enumerate(instances):
+            status = octi.test_instance(ist["url"],
+                                        ist["apikey"],
+                                        ist["verifycert"])
+            if status:
+                print("Testing...")
+                # for ioc in octi.get_iocs(ist["id"]):
+                #    iocs.add(ioc["type"], ioc["tag"], ioc["tlp"],
+                #             ioc["value"], "octi-{}".format(ist["id"]))
+                # octi.update_sync(ist["id"])
+                instances.pop(i)
+        if instances:
+            time.sleep(60)
 
 
 p1 = Process(target=watch_iocs)
 p2 = Process(target=watch_whitelists)
 p3 = Process(target=watch_misp)
+p4 = Process(target=watch_octi)
 
 p1.start()
 p2.start()
 p3.start()
+p4.start()
