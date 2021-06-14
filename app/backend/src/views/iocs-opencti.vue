@@ -15,7 +15,7 @@
                     <label class="misp-label">Instance name</label><span></span>
                     <input class="form-input" type="text" placeholder="CYBERACME OpenCTI" v-model="openctiinst.name" required>
                     <label class="misp-label">Instance URL</label><span></span>
-                    <input class="form-input" type="text" placeholder="https://opencti.cyberacme.com" v-model="openctinst.url" required>
+                    <input class="form-input" type="text" placeholder="https://opencti.cyberacme.com" v-model="openctiinst.url" required>
                     <label class="misp-label">Authentication key</label><span></span>
                     <input class="form-input" type="text" placeholder="83114ab2-3570-493b-8caa-14ef1bcf8e9a" v-model="openctiinst.key" required>
                     <label class="misp-label">Verify certificate? </label><span></span>
