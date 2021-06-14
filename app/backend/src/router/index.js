@@ -41,6 +41,12 @@ const routes = [
     props: true
   },
   {
+    path: '/iocs/opencti',
+    name: 'iocs-opencti',
+    component: () => import('../views/iocs-opencti.vue'),
+    props: true
+  },
+  {
     path: '/iocs/search',
     name: 'iocs-search',
     component: () => import('../views/iocs-search.vue'),

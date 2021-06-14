@@ -7,6 +7,7 @@ from app.blueprints.ioc import ioc_bp
 from app.blueprints.whitelist import whitelist_bp
 from app.blueprints.config import config_bp
 from app.blueprints.misp import misp_bp
+from app.blueprints.octi import octi_bp
 import datetime
 import secrets
 import jwt
@@ -58,6 +59,7 @@ app.register_blueprint(ioc_bp, url_prefix='/api/ioc')
 app.register_blueprint(whitelist_bp, url_prefix='/api/whitelist')
 app.register_blueprint(config_bp, url_prefix='/api/config')
 app.register_blueprint(misp_bp, url_prefix='/api/misp')
+app.register_blueprint(octi_bp, url_prefix='/api/octi')
 
 if __name__ == '__main__':
     ssl_cert = "{}/{}".format(path[0], 'cert.pem')

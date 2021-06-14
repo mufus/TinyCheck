@@ -42,6 +42,9 @@
                 <li class="menu-item">
                   <span @click="$router.push('/iocs/misp')">MISP Instances</span>
                 </li>
+                <li class="menu-item">
+                  <span @click="$router.push('/iocs/opencti')">OpenCTI Instances</span>
+                </li>
               </ul>
             </div>
           </div>
