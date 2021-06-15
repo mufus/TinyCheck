@@ -18,16 +18,16 @@
                     <input class="form-input" type="text" ref="misp_url" placeholder="https://misp.cyberacme.com" v-model="mispinst.url" required>
                     <label class="misp-label">Authentication key</label><span></span>
                     <input class="form-input" type="text" ref="misp_key" placeholder="OqHSMyAuth3ntic4t10nK3y0MyAuth3ntic4t10nK3y3iiH" v-model="mispinst.key" required>
-                    <label class="misp-label">Verify certificate? </label><span></span>
-                    <div style="flex:50%"><label class="form-switch">
-                    <input type="checkbox" @change="switch_config('frontend', 'kiosk_mode')" v-model="mispinst.ssl">
+                    <label class="misp-label" v-if="mispinst.url.startsWith('https://')">Verify certificate? </label><span  v-if="mispinst.url.startsWith('https://')"></span>
+                    <div style="flex:50%" v-if="mispinst.url.startsWith('https://')"><label class="form-switch">
+                    <input type="checkbox" v-model="mispinst.ssl">
                     <i class="form-icon"></i>
                     </label></div>
                 </div>
                 <button class="btn-primary btn col-12" v-on:click="add_instance()">Add MISP instance</button>
                 <div class="form-group" v-if="added">
                     <div class="toast toast-success">
-                        ✓ MISP instance added successfully.
+                        ✓ MISP instance added successfully. Redirecting to instances in 2 seconds. 
                     </div>
                 </div>
                 <div class="form-group" v-if="error">
@@ -108,6 +108,10 @@ export default {
                 axios.post(`/api/misp/add`, { data: { instance: this.mispinst } }, { headers: {'X-Token': this.jwt} }).then(response => {
                     if(response.data.status){
                         this.added = true;
+                        setTimeout(function (){ 
+                            this.switch_tab('instances')
+                            this.mispinst = { name:'', url:'',key:'', ssl:false } 
+                        }.bind(this), 2000);
                     } else {
                         this.error = response.data.message;
                     }
