@@ -56,8 +56,8 @@ class OCTI(object):
             Delete a OpenCTI instance by its id in the database.
             :return: status of the operation in JSON
         """
-        if db.session.query(exists().where(OCTIInst.id == misp_id)).scalar():
-            db.session.query(OCTIInst).filter_by(id=misp_id).delete()
+        if db.session.query(exists().where(OCTIInst.id == opencti_id)).scalar():
+            db.session.query(OCTIInst).filter_by(id=opencti_id).delete()
             db.session.commit()
             return {"status": True,
                     "message": "OpenCTI instance deleted"}
