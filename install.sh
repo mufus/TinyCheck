@@ -396,7 +396,7 @@ check_interfaces(){
     # Wi-Fi interface with AP mode available.
     for iface in $IFACES;
     do
-        if echo "$iface" | grep -Eq "(wlan[0-9]|wl[a-z0-9]{20})"; then
+        if echo "$iface" | grep -Eq "(wlan[0-9]|wl[a-z0-9]{2,20})"; then
             config="$(ifconfig $iface)"                             # Get the iface logic configuration
             if echo "$config" | grep -qv "inet "; then              # Test if not currently connected
                 hw="$(iw $iface info | grep wiphy | cut -d" " -f2)" # Get the iface hardware id.
