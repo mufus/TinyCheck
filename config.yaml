@@ -52,7 +52,7 @@ frontend:
   user_lang: userlang
   update: updateoption
   choose_net: false
-  
+
 # NETWORK -
 # Some elements related to the network configuration, such as
 # the interfaces (updated during the install), the list of SSIDs
@@ -77,6 +77,6 @@ network:
 watchers:
   iocs:
   - https://raw.githubusercontent.com/KasperskyLab/TinyCheck/main/assets/iocs.json
-  - https://raw.githubusercontent.com/Te-k/stalkerware-indicators/master/indicators-for-tinycheck.json
+  - https://raw.githubusercontent.com/Te-k/stalkerware-indicators/master/generated/indicators-for-tinycheck.json
   whitelists:
   - https://raw.githubusercontent.com/KasperskyLab/TinyCheck/main/assets/whitelist.json
